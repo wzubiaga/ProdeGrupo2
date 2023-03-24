@@ -9,4 +9,10 @@ public class Equipo {
 
     public String nombre() { return nombreEquipo; }
     public String descripcion() {return  descripcionEquipo; }
+
+    public boolean equals(Equipo e) {
+        if ((e.nombre()==this.nombre())&&(e.descripcion()==this.descripcion())) return true;
+        return  false;
+    }
+
 }
