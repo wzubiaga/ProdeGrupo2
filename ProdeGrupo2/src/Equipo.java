@@ -1,17 +1,20 @@
 public class Equipo {
-    private String nombreEquipo;
-    private String descripcionEquipo;
 
-    public Equipo(String nombre, String descripcion) {
-        this.nombreEquipo = nombre;
-        this.descripcionEquipo = descripcion;
+    private int id;
+    private String nombre;
+    private String descripcion;
+
+    public Equipo(int id,String nombre, String descripcion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
     }
-
-    public String nombre() { return nombreEquipo; }
-    public String descripcion() {return  descripcionEquipo; }
+    public int getId() {return id;}
+    public String getNombre() { return nombre; }
+    public String getDescripcion() {return descripcion; }
 
     public boolean equals(Equipo e) {
-        if ((e.nombre()==this.nombre())&&(e.descripcion()==this.descripcion())) return true;
+        if ((e.getNombre()==this.getNombre())&&(e.getDescripcion()==this.getDescripcion())) return true;
         return  false;
     }
 

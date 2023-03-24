@@ -15,6 +15,6 @@ public class Pronostico {
     public ResultadoEnum getResultadoEnum() { return resultadoEnum; }
     public String imprimeResulado(){
         //return "Equipo1:"+ equipo1.nombre()+"["+golesEquipo1+"]"+" VS Equipo2:"+ equipo2.nombre()+"["+golesEquipo2+"]";
-        return equipo.nombre()+"["+resultadoEnum+"]";
+        return equipo.getNombre()+"["+resultadoEnum+"]";
     }
 }

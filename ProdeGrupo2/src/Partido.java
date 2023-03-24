@@ -1,20 +1,22 @@
 public class Partido {
+    private int id;
     private Equipo equipo1;
     private  Equipo equipo2;
     private int golesEquipo1;
     private int golesEquipo2;
 
-    public Partido(Equipo a, Equipo b,int golesA, int golesB) {
+    public Partido(int id,Equipo a, Equipo b,int golesA, int golesB) {
+        this.id = id;
         this.golesEquipo1 = golesA;
         this.golesEquipo2 = golesB;
         equipo1 = a;
         equipo2 = b;
     }
-
-    public Equipo Equipo1(){return equipo1;}
-    public Equipo Equipo2(){return equipo2;}
-    public  int golesEquipo1(){return golesEquipo1;}
-    public  int golesEquipo2(){return golesEquipo2;}
+    public int getId(){return id;}
+    public Equipo getEquipo1(){return equipo1;}
+    public Equipo getEquipo2(){return equipo2;}
+    public  int getGolesEquipo1(){return golesEquipo1;}
+    public  int getGolesEquipo2(){return golesEquipo2;}
 
     public ResultadoEnum Resultado (Equipo a){
         Equipo b;
@@ -45,9 +47,9 @@ public class Partido {
                     return ResultadoEnum.empate;
 
    }
-
-   public String imprimeResulado(){
+    public String imprimeResulado(){
        //return "Equipo1:"+ equipo1.nombre()+"["+golesEquipo1+"]"+" VS Equipo2:"+ equipo2.nombre()+"["+golesEquipo2+"]";
-       return equipo1.nombre()+"["+golesEquipo1+"]"+" VS. "+ equipo2.nombre()+"["+golesEquipo2+"]";
-   }
+       return equipo1.getNombre()+"["+golesEquipo1+"]"+" VS. "+ equipo2.getNombre()+"["+golesEquipo2+"]";
+    }
+
 }

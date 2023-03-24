@@ -2,37 +2,33 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 import java.util.Scanner;
 public class ImportadorDeResultados {
 
-    public static ArrayList<Partido> GetResultadosFromFile(String fileName)throws IOException {
+    public static ArrayList<Partido> GetResultadosFromFile(String fileName, Liga equiposParticipantes)throws IOException {
 
         Path archivoResultado = Paths.get(fileName);
-        // Path archivoPronostico = Paths.get("pronostico.csv");
         Scanner lector = new Scanner(archivoResultado);
         lector.useDelimiter("[;\r\n]+");
         ArrayList<Partido> listapartidos = new ArrayList<>();
-
+        int nroLinea = 1;
         while (lector.hasNext()) {
             String A = lector.next();
             String B = lector.next();
             int golesA = lector.nextInt();
             int golesB = lector.nextInt();
             // System.out.println(A+B+golesA+golesB);
-
-            //por ahora al tomar del archivo creo asi
-            //habra una HashMap equipos y se trae de ahi el objeto y se pasa ese que esta creado
-            Equipo equipo1 = new Equipo(A, "");
-            Equipo equipo2 = new Equipo(B, "");
-
-            Partido nuevo = new Partido(equipo1, equipo2, golesA, golesB);
+           Partido nuevo = new Partido(nroLinea, equiposParticipantes.getEquipoParticipante(A), equiposParticipantes.getEquipoParticipante(B), golesA, golesB);
             listapartidos.add(nuevo);
+            nroLinea++;
         }
         lector.close();
         return listapartidos;
     }
 
-    public static ArrayList<Pronostico> GetPronosticoFromFile(String fileName)throws IOException {
+    public static ArrayList<Pronostico> GetPronosticoFromFile(String fileName, Liga equiposParticipantes,Ronda primeraRonda)throws IOException {
 
         Path archivoPronostico = Paths.get(fileName);
         Scanner lector = new Scanner(archivoPronostico);
@@ -47,24 +43,30 @@ public class ImportadorDeResultados {
             String B = lector.next();
             // System.out.println(A+ganaA+empate+ganaB+B);
 
-            //Ver como asociar esto con partido
-           // Partido partido;
+            Partido partido=  primeraRonda.BuscarEnfrentamiento( equiposParticipantes.getEquipoParticipante(A), equiposParticipantes.getEquipoParticipante(B));
+
+            if (Objects.equals(partido,null)){
+                   lector.close();
+                //inventigar si esta bien salir asi de la funcion
+                return null;
+            }
+
             Equipo equipo;
             ResultadoEnum resul;
 
             if (ganaB.equals(" ")) {
-                equipo = new Equipo(A, "");
+                equipo = equiposParticipantes.getEquipoParticipante(A);
                 if (ganaA.equals(" ")) {
                     resul = ResultadoEnum.empate;
                 }else {resul = ResultadoEnum.ganador;}
             }else{
-                equipo = new Equipo(B, "");
-                resul = ResultadoEnum.ganador;}
-
+                equipo = equiposParticipantes.getEquipoParticipante(B);
+                resul = ResultadoEnum.ganador;};
             Pronostico nuevo = new Pronostico(equipo,resul);
             listapronosticos.add(nuevo);
             }
         lector.close();
         return listapronosticos;
     }
+
 }
