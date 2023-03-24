@@ -28,12 +28,16 @@ public class ImportadorDeResultados {
         return listapartidos;
     }
 
+
+
     public static ArrayList<Pronostico> GetPronosticoFromFile(String fileName, Liga equiposParticipantes,Ronda primeraRonda)throws IOException {
 
         Path archivoPronostico = Paths.get(fileName);
         Scanner lector = new Scanner(archivoPronostico);
         lector.useDelimiter("[;\r\n]+");
         ArrayList<Pronostico> listapronosticos = new ArrayList<>();
+        int puntos = 0;
+        int acumulados = 0;
 
         while (lector.hasNext()) {
             String A = lector.next();
@@ -46,25 +50,15 @@ public class ImportadorDeResultados {
             Partido partido=  primeraRonda.BuscarEnfrentamiento( equiposParticipantes.getEquipoParticipante(A), equiposParticipantes.getEquipoParticipante(B));
 
             if (Objects.equals(partido,null)){
-                   lector.close();
+                lector.close();
                 //inventigar si esta bien salir asi de la funcion
                 return null;
             }
 
-            Equipo equipo;
-            ResultadoEnum resul;
-
-            if (ganaB.equals(" ")) {
-                equipo = equiposParticipantes.getEquipoParticipante(A);
-                if (ganaA.equals(" ")) {
-                    resul = ResultadoEnum.empate;
-                }else {resul = ResultadoEnum.ganador;}
-            }else{
-                equipo = equiposParticipantes.getEquipoParticipante(B);
-                resul = ResultadoEnum.ganador;};
-            Pronostico nuevo = new Pronostico(equipo,resul);
+            Pronostico nuevo = new Pronostico(partido,equiposParticipantes.getEquipoParticipante(A),ganaA,empate,ganaB ,equiposParticipantes.getEquipoParticipante(B));
             listapronosticos.add(nuevo);
-            }
+        }
+
         lector.close();
         return listapronosticos;
     }

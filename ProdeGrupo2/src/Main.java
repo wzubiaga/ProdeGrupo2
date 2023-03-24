@@ -21,9 +21,11 @@ public class Main {
         if (importarR.isEmpty()) {
             System.out.println("No se encontraron Resultados");
         } else {
+            System.out.println("Resultado de la Liga: ");
             for (Partido p : importarR) {
                 System.out.println(p.imprimeResulado());
             }
+            System.out.println("----------------------");
         }
 
         Ronda primeraRonda = new Ronda(1, importarR);
@@ -36,9 +38,14 @@ public class Main {
             if (importarP.isEmpty()) {
                 System.out.println("No se encontraron Pronosticos");
             } else {
+                System.out.println("Pronosticos del Participante:");
+                int acumulados = 0;
                 for (Pronostico p : importarP) {
+                    acumulados = acumulados + p.getPuntos();
                     System.out.println(p.imprimeResulado());
                 }
+                System.out.println("----------------------");
+                System.out.println("Puntos obtenidos:"+acumulados);
             }
         }
     }
